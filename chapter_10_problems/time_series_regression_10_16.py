@@ -29,13 +29,31 @@ print(f"R-squared: {linear_regression.rvalue ** 2}")
 wildfires["Trend"] = linear_regression.slope * x + linear_regression.intercept
 
 # Plot
-sns.set(style="whitegrid")
+import matplotlib.ticker as mtick
+
 plt.figure(figsize=(10, 6))
 sns.scatterplot(x="Date", y="Acres Burned", data=wildfires, label="Observed")
 sns.lineplot(x="Date", y="Trend", data=wildfires, color="red", label="Trend Line")
 
-plt.title("U.S. Wildfires - Acres Burned (2000–2015)")
+plt.title(f"U.S. Wildfires - Acres Burned ({wildfires['Date'].min()}–{wildfires['Date'].max()})")
 plt.xlabel("Year")
 plt.ylabel("Acres Burned")
+
+# Format y-axis in millions
+plt.gca().yaxis.set_major_formatter(
+    mtick.FuncFormatter(lambda x, _: f'{x*1e-6:.1f}M')
+)
+
+# Add regression equation and R² to the chart
+equation_text = (
+    f"y = {linear_regression.slope:.0f}x + {linear_regression.intercept:.0f}\n"
+    f"R² = {linear_regression.rvalue**2:.2f}"
+)
+plt.text(wildfires["Date"].min() + 1,
+         wildfires["Acres Burned"].max()*0.9,
+         equation_text,
+         fontsize=10, color="black",
+         bbox=dict(facecolor="white", alpha=0.5))
+
 plt.legend()
 plt.show()
