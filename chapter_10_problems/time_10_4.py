@@ -1,0 +1,59 @@
+# time_10_4.py
+"""Class Time with read-write properties."""
+
+class Time:
+    """Class Time with read-write properties."""
+
+    def __init__(self, hour=0, minute=0, second=0):
+        """Initialize each attribute."""
+        self.hour = hour        # 0–23
+        self.minute = minute    # 0–59
+        self.second = second    # 0–59
+
+    @property
+    def hour(self):
+        """Return the hour."""
+        return self._hour
+
+    @hour.setter
+    def hour(self, hour):
+        """Set the hour."""
+        if not (0 <= hour < 24):
+            raise ValueError(f'Hour ({hour}) must be 0–23')
+        self._hour = hour
+
+    @property
+    def minute(self):
+        """Return the minute."""
+        return self._minute
+
+    @minute.setter
+    def minute(self, minute):
+        """Set the minute."""
+        if not (0 <= minute < 60):
+            raise ValueError(f'Minute ({minute}) must be 0–59')
+        self._minute = minute
+
+    @property
+    def second(self):
+        """Return the second."""
+        return self._second
+
+    @second.setter
+    def second(self, second):
+        """Set the second."""
+        if not (0 <= second < 60):
+            raise ValueError(f'Second ({second}) must be 0–59')
+        self._second = second
+
+    def set_time(self, hour=0, minute=0, second=0):
+        """Set values of hour, minute, and second."""
+        self.hour = hour
+        self.minute = minute
+        self.second = second
+
+    def __repr__(self):
+        """Return Time string for repr()."""
+        return (f'Time(hour={self.hour}, '
+                f'minute={self.minute}, '
+                f'second={self.second})')
